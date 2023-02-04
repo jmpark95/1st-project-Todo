@@ -2,16 +2,29 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-export default function Form() {
+export default function Form({ addTask }) {
+   const [formInput, setFormInput] = useState("");
    return (
-      <form action="">
+      <form
+         onSubmit={(e) => {
+            e.preventDefault();
+            if (formInput) {
+               addTask(formInput);
+               setFormInput("");
+            }
+         }}
+      >
          <TextField
             id="outlined-basic"
             placeholder="Enter Todo"
             variant="outlined"
             fullWidth
+            value={formInput}
+            onChange={(e) => setFormInput(e.target.value)}
          />
-         <Button variant="outlined">Add</Button>
+         <Button variant="outlined" type="submit">
+            Add
+         </Button>
       </form>
    );
 }

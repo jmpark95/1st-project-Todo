@@ -1,17 +1,40 @@
+import { useState } from "react";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
 
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { nanoid } from "nanoid";
 
 function App() {
+   const INITIAL_DATA = [
+      { id: nanoid(), name: "Todo1", completed: true },
+      { id: nanoid(), name: "Todo2", completed: false },
+   ];
+
+   const [tasks, setTasks] = useState(INITIAL_DATA);
+
+   const taskList = tasks.map((task) => {
+      return (
+         <Todo
+            key={task.id}
+            id={task.id}
+            name={task.name}
+            completed={task.completed}
+         />
+      );
+   });
+
+   function addTask(formInput) {
+      setTasks([...tasks, { id: nanoid(), name: formInput, completed: false }]);
+   }
+
    return (
       <div className="app">
-         <h1>My Todos</h1>
+         <h1>Todo List</h1>
 
-         <Form />
+         <Form addTask={addTask} />
 
-         <h3>3 tasks remaining</h3>
+         <h3>{taskList.length} tasks remaining</h3>
 
          <div className="filter-container">
             <Button variant="outlined">All</Button>
@@ -19,10 +42,7 @@ function App() {
             <Button variant="outlined">Done</Button>
          </div>
 
-         <div className="todo-item-container">
-            <Todo />
-            <Todo />
-         </div>
+         <div className="todo-item-container">{taskList}</div>
       </div>
    );
 }

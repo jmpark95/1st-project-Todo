@@ -4,12 +4,12 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function Todo() {
+export default function Todo({ id, name, completed }) {
    return (
       <div className="todo-item">
-         <p>Todo</p>
+         <p>{name}</p>
          <div className="icons">
-            <Checkbox defaultChecked={false} />
+            <Checkbox defaultChecked={completed} />
             <IconButton>
                <EditIcon />
             </IconButton>
