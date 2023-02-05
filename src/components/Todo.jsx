@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
+import { Button, Checkbox, IconButton, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import TextField from "@mui/material/TextField";
 
 export default function Todo({
    id,
@@ -50,77 +47,32 @@ export default function Todo({
    } else {
       return (
          <div className="todo-item" id={id}>
-            <TextField
-               sx={{
-                  ".MuiInputBase-input": {
-                     padding: "0.3rem",
-                  },
-               }}
-               value={editingFieldText}
-               onChange={(e) => setEditingFieldText(e.target.value)}
-            />
-            <div className="icons">
-               <Button
-                  variant="outlined"
-                  type="submit"
-                  onClick={() => {
-                     setIsEditing(false);
-                     updateName(id, editingFieldText);
+            <form>
+               <TextField
+                  fullWidth
+                  style={{ justifyContent: "center" }}
+                  sx={{
+                     "& .MuiInputBase-input": {
+                        padding: "0.1rem",
+                     },
                   }}
-               >
-                  Edit
-               </Button>
-            </div>
+                  value={editingFieldText}
+                  onChange={(e) => setEditingFieldText(e.target.value)}
+               />
+               <div className="icons">
+                  <Button
+                     variant="outlined"
+                     type="submit"
+                     onClick={() => {
+                        setIsEditing(false);
+                        updateName(id, editingFieldText);
+                     }}
+                  >
+                     Edit
+                  </Button>
+               </div>
+            </form>
          </div>
       );
    }
 }
-
-// else if (template === "Editing") {
-//    return (
-//       <div className="todo-item" id={id}>
-//          <TextField
-//             sx={{
-//                ".MuiInputBase-input": {
-//                   padding: "0.3rem",
-//                },
-//             }}
-//             value={editingFieldText}
-//             onChange={(e) => setEditingFieldText(e.target.value)}
-//          />
-//          <div className="icons">
-//             <Button
-//                variant="outlined"
-//                type="submit"
-//                onClick={() => {
-//                   setTemplate("Default");
-//                   updateName(id, editingFieldText);
-//                }}
-//             >
-//                Edit
-//             </Button>
-//          </div>
-//       </div>
-//    );
-// } else if (template === "Deleted") {
-//    return (
-//       <div className="todo-item" id={id}>
-//          <del style={{ color: "red" }}>{name}</del>
-//          <div className="icons">
-//             <Checkbox
-//                defaultChecked={completed}
-//                onClick={() => {
-//                   setTemplate("Default");
-//                   updatedCompletedStatus(id);
-//                }}
-//             />
-//             <IconButton sx={{ color: "#ff9800" }}>
-//                <EditIcon />
-//             </IconButton>
-//             <IconButton sx={{ color: "#d32f2f" }}>
-//                <DeleteIcon />
-//             </IconButton>
-//          </div>
-//       </div>
-//    );
-// }

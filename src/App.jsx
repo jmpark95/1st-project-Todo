@@ -2,16 +2,14 @@ import { useState } from "react";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
 
-import Button from "@mui/material/Button";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { nanoid } from "nanoid";
 
 function App() {
    const INITIAL_DATA = [
-      { id: nanoid(), name: "Todo1", completed: false },
-      { id: nanoid(), name: "Todo2", completed: false },
-      { id: nanoid(), name: "Todo3", completed: false },
+      { id: nanoid(), name: "Todo 1", completed: false },
+      { id: nanoid(), name: "Todo 2", completed: false },
+      { id: nanoid(), name: "Todo 3", completed: false },
    ];
 
    const [tasks, setTasks] = useState(INITIAL_DATA);
