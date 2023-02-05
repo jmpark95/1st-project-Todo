@@ -22,7 +22,7 @@ function App() {
       filterFunction = (task) => task;
    } else if (filter === "todo") {
       filterFunction = (task) => task.completed === false;
-   } else {
+   } else if (filter === "done") {
       filterFunction = (task) => task.completed === true;
    }
 
@@ -74,7 +74,7 @@ function App() {
 
    return (
       <div className="app">
-         <h1 style={{ color: "#1976d2" }}>Todo List</h1>
+         <h1 style={{ color: "#1976d2" }}>To-do List</h1>
 
          <Form addTask={addTask} />
 
@@ -89,15 +89,16 @@ function App() {
                exclusive
                onChange={handleFilter}
                aria-label="text alignment"
+               sx={{ maxWidth: "100%" }}
             >
                <ToggleButton value="all" aria-label="all">
-                  <Button variant="outlined">All</Button>
+                  All
                </ToggleButton>
                <ToggleButton value="todo" aria-label="todo">
-                  <Button variant="outlined">To do</Button>
+                  Todo
                </ToggleButton>
                <ToggleButton value="done" aria-label="done">
-                  <Button variant="outlined">Done</Button>
+                  Done
                </ToggleButton>
             </ToggleButtonGroup>
          </div>

@@ -14,23 +14,26 @@ export default function Todo({
    updateName,
    deleteTask,
 }) {
-   const [template, setTemplate] = useState("Default");
+   const [isEditing, setIsEditing] = useState(false);
    const [editingFieldText, setEditingFieldText] = useState("");
 
-   if (template === "Default") {
+   if (isEditing === false) {
       return (
          <div className="todo-item" id={id}>
-            <p>{name}</p>
+            {completed ? (
+               <del style={{ color: "red", overflow: "auto" }}>{name}</del>
+            ) : (
+               <p style={{ overflow: "auto" }}>{name}</p>
+            )}
             <div className="icons">
                <Checkbox
                   defaultChecked={completed}
                   onClick={() => {
-                     setTemplate("Deleted");
                      updatedCompletedStatus(id);
                   }}
                />
                <IconButton
-                  onClick={() => setTemplate("Editing")}
+                  onClick={() => setIsEditing(true)}
                   sx={{ color: "#ff9800" }}
                >
                   <EditIcon />
@@ -44,7 +47,7 @@ export default function Todo({
             </div>
          </div>
       );
-   } else if (template === "Editing") {
+   } else {
       return (
          <div className="todo-item" id={id}>
             <TextField
@@ -61,7 +64,7 @@ export default function Todo({
                   variant="outlined"
                   type="submit"
                   onClick={() => {
-                     setTemplate("Default");
+                     setIsEditing(false);
                      updateName(id, editingFieldText);
                   }}
                >
@@ -70,26 +73,54 @@ export default function Todo({
             </div>
          </div>
       );
-   } else if (template === "Deleted") {
-      return (
-         <div className="todo-item" id={id}>
-            <del style={{ color: "red" }}>{name}</del>
-            <div className="icons">
-               <Checkbox
-                  defaultChecked={completed}
-                  onClick={() => {
-                     setTemplate("Default");
-                     updatedCompletedStatus(id);
-                  }}
-               />
-               <IconButton sx={{ color: "#ff9800" }}>
-                  <EditIcon />
-               </IconButton>
-               <IconButton sx={{ color: "#d32f2f" }}>
-                  <DeleteIcon />
-               </IconButton>
-            </div>
-         </div>
-      );
    }
 }
+
+// else if (template === "Editing") {
+//    return (
+//       <div className="todo-item" id={id}>
+//          <TextField
+//             sx={{
+//                ".MuiInputBase-input": {
+//                   padding: "0.3rem",
+//                },
+//             }}
+//             value={editingFieldText}
+//             onChange={(e) => setEditingFieldText(e.target.value)}
+//          />
+//          <div className="icons">
+//             <Button
+//                variant="outlined"
+//                type="submit"
+//                onClick={() => {
+//                   setTemplate("Default");
+//                   updateName(id, editingFieldText);
+//                }}
+//             >
+//                Edit
+//             </Button>
+//          </div>
+//       </div>
+//    );
+// } else if (template === "Deleted") {
+//    return (
+//       <div className="todo-item" id={id}>
+//          <del style={{ color: "red" }}>{name}</del>
+//          <div className="icons">
+//             <Checkbox
+//                defaultChecked={completed}
+//                onClick={() => {
+//                   setTemplate("Default");
+//                   updatedCompletedStatus(id);
+//                }}
+//             />
+//             <IconButton sx={{ color: "#ff9800" }}>
+//                <EditIcon />
+//             </IconButton>
+//             <IconButton sx={{ color: "#d32f2f" }}>
+//                <DeleteIcon />
+//             </IconButton>
+//          </div>
+//       </div>
+//    );
+// }

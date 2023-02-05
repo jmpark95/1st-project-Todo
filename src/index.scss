@@ -33,7 +33,8 @@ form {
 }
 
 .filter-container {
-   @include align-items;
+   display: flex;
+   justify-content: center;
 }
 
 .todo-item-container {
