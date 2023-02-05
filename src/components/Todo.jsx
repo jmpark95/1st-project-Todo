@@ -68,7 +68,7 @@ export default function Todo({
                         updateName(id, editingFieldText);
                      }}
                   >
-                     Edit
+                     Submit
                   </Button>
                </div>
             </form>

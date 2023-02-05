@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
 
@@ -6,14 +6,14 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { nanoid } from "nanoid";
 
 function App() {
-   const INITIAL_DATA = [
-      { id: nanoid(), name: "Todo 1", completed: false },
-      { id: nanoid(), name: "Todo 2", completed: false },
-      { id: nanoid(), name: "Todo 3", completed: false },
-   ];
-
-   const [tasks, setTasks] = useState(INITIAL_DATA);
+   const [tasks, setTasks] = useState(() => {
+      return JSON.parse(localStorage.getItem("tasks")) || [];
+   });
    const [filter, setFilter] = useState("all");
+
+   useEffect(() => {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+   }, [tasks]);
 
    let filterFunction;
    if (filter === "all") {
