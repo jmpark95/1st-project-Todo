@@ -27,7 +27,7 @@ export default function Todo({
             )}
             <div className="icons">
                <Checkbox
-                  defaultChecked={completed}
+                  checked={completed}
                   onClick={() => {
                      updatedCompletedStatus(id);
                   }}

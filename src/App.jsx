@@ -65,7 +65,9 @@ function App() {
    }
 
    function handleFilter(e, newFilter) {
-      setFilter(newFilter);
+      if (newFilter !== null) {
+         setFilter(newFilter);
+      }
    }
 
    const tasksRemainingLength = tasks.filter(
