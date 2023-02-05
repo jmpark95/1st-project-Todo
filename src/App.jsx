@@ -3,6 +3,8 @@ import Form from "./components/Form";
 import Todo from "./components/Todo";
 
 import Button from "@mui/material/Button";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { nanoid } from "nanoid";
 
 function App() {
@@ -13,8 +15,18 @@ function App() {
    ];
 
    const [tasks, setTasks] = useState(INITIAL_DATA);
+   const [filter, setFilter] = useState("all");
 
-   const taskList = tasks.map((task) => {
+   let filterFunction;
+   if (filter === "all") {
+      filterFunction = (task) => task;
+   } else if (filter === "todo") {
+      filterFunction = (task) => task.completed === false;
+   } else {
+      filterFunction = (task) => task.completed === true;
+   }
+
+   const taskList = tasks.filter(filterFunction).map((task) => {
       return (
          <Todo
             key={task.id}
@@ -52,6 +64,10 @@ function App() {
       setTasks(tasks.filter((task) => task.id !== id));
    }
 
+   function handleFilter(e, newFilter) {
+      setFilter(newFilter);
+   }
+
    const tasksRemainingLength = tasks.filter(
       (task) => task.completed === false
    ).length;
@@ -68,9 +84,22 @@ function App() {
          </h3>
 
          <div className="filter-container">
-            <Button variant="outlined">All</Button>
-            <Button variant="outlined">To do</Button>
-            <Button variant="outlined">Done</Button>
+            <ToggleButtonGroup
+               value={filter}
+               exclusive
+               onChange={handleFilter}
+               aria-label="text alignment"
+            >
+               <ToggleButton value="all" aria-label="all">
+                  <Button variant="outlined">All</Button>
+               </ToggleButton>
+               <ToggleButton value="todo" aria-label="todo">
+                  <Button variant="outlined">To do</Button>
+               </ToggleButton>
+               <ToggleButton value="done" aria-label="done">
+                  <Button variant="outlined">Done</Button>
+               </ToggleButton>
+            </ToggleButtonGroup>
          </div>
 
          <div className="todo-item-container">{taskList}</div>

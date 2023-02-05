@@ -22,7 +22,7 @@ export default function Form({ addTask }) {
             value={formInput}
             onChange={(e) => setFormInput(e.target.value)}
          />
-         <Button variant="outlined" type="submit">
+         <Button variant="contained" type="submit">
             Add
          </Button>
       </form>
