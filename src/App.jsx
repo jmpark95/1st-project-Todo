@@ -83,7 +83,7 @@ function App() {
 
    return (
       <div className="app">
-         <h1 style={{ color: "#1976d2" }}>Netlify CD test</h1>
+         <h1 style={{ color: "#1976d2" }}>To-do App</h1>
 
          <Form addTask={addTask} />
 
