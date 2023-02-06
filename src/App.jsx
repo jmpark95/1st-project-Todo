@@ -59,15 +59,15 @@ function App() {
 
    function deleteTask(id) {
       dispatch({
-         id: id,
          type: "deleted",
+         id: id,
       });
    }
 
    function toggleCheckbox(id) {
       dispatch({
-         id: id,
          type: "toggled_checkbox",
+         id: id,
       });
    }
 
@@ -83,7 +83,7 @@ function App() {
 
    return (
       <div className="app">
-         <h1 style={{ color: "#1976d2" }}>To-do List</h1>
+         <h1 style={{ color: "#1976d2" }}>Netlify CD test</h1>
 
          <Form addTask={addTask} />
 
