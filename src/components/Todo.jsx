@@ -7,8 +7,8 @@ export default function Todo({
    id,
    name,
    completed,
-   updatedCompletedStatus,
-   updateName,
+   toggleCheckbox,
+   updateTask,
    deleteTask,
 }) {
    const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +26,7 @@ export default function Todo({
                <Checkbox
                   checked={completed}
                   onClick={() => {
-                     updatedCompletedStatus(id);
+                     toggleCheckbox(id);
                   }}
                />
                <IconButton
@@ -65,7 +65,7 @@ export default function Todo({
                      type="submit"
                      onClick={() => {
                         setIsEditing(false);
-                        updateName(id, editingFieldText);
+                        updateTask(id, editingFieldText);
                      }}
                   >
                      Submit

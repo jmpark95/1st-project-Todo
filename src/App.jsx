@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
-
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { nanoid } from "nanoid";
 
 function App() {
-   const [tasks, setTasks] = useState(() => {
-      return JSON.parse(localStorage.getItem("tasks")) || [];
-   });
+   const initialState =
+      localStorage.length === 0
+         ? []
+         : JSON.parse(localStorage.getItem("tasks"));
+
+   const [tasks, dispatch] = useReducer(reducer, initialState);
    const [filter, setFilter] = useState("all");
 
    useEffect(() => {
@@ -31,35 +33,42 @@ function App() {
             id={task.id}
             name={task.name}
             completed={task.completed}
-            updatedCompletedStatus={updatedCompletedStatus}
-            updateName={updateName}
+            toggleCheckbox={toggleCheckbox}
+            updateTask={updateTask}
             deleteTask={deleteTask}
          />
       );
    });
 
    function addTask(formInput) {
-      setTasks([...tasks, { id: nanoid(), name: formInput, completed: false }]);
+      dispatch({
+         type: "added",
+         id: nanoid(),
+         name: formInput,
+         completed: false,
+      });
    }
 
-   function updatedCompletedStatus(id) {
-      setTasks(
-         tasks.map((task) =>
-            task.id === id ? { ...task, completed: !task.completed } : task
-         )
-      );
-   }
-
-   function updateName(id, editingFieldText) {
-      setTasks(
-         tasks.map((task) =>
-            task.id === id ? { ...task, name: editingFieldText } : task
-         )
-      );
+   function updateTask(id, editingFieldText) {
+      dispatch({
+         type: "updated",
+         id: id,
+         name: editingFieldText,
+      });
    }
 
    function deleteTask(id) {
-      setTasks(tasks.filter((task) => task.id !== id));
+      dispatch({
+         id: id,
+         type: "deleted",
+      });
+   }
+
+   function toggleCheckbox(id) {
+      dispatch({
+         id: id,
+         type: "toggled_checkbox",
+      });
    }
 
    function handleFilter(e, newFilter) {
@@ -106,6 +115,36 @@ function App() {
          <div className="todo-item-container">{taskList}</div>
       </div>
    );
+}
+
+function reducer(tasks, action) {
+   switch (action.type) {
+      case "added": {
+         return [
+            ...tasks,
+            {
+               id: action.id,
+               name: action.name,
+               completed: action.completed,
+            },
+         ];
+      }
+      case "updated": {
+         return tasks.map((task) =>
+            task.id === action.id ? { ...task, name: action.name } : task
+         );
+      }
+      case "deleted": {
+         return tasks.filter((task) => task.id !== action.id);
+      }
+      case "toggled_checkbox": {
+         return tasks.map((task) =>
+            task.id === action.id
+               ? { ...task, completed: !task.completed }
+               : task
+         );
+      }
+   }
 }
 
 export default App;
