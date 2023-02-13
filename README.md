@@ -11,3 +11,5 @@ A simple to-do app with the following features.
 Integrating MUI and SASS is obviously overengineering such a simple project, but I'm hoping to gain exposure to all the industry-standard technologies as I develop my portfolio projects.
 
 A key takeaway from this project was preserving state for removed components.[ReactDocs](https://beta.reactjs.org/learn/preserving-and-resetting-state)
+
+Testing git - new repo 
